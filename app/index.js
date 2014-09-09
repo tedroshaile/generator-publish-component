@@ -4,9 +4,18 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 
+var uCaseFirst = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+var lCaseFirst = function(string) {
+    return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+
 var AngularComponentGenerator = yeoman.generators.Base.extend({
     initializing: function () {
-        this.pkg = require('../package.json');
+        //this.pkg = require('../package.json');
     },
 
     prompting: function () {
@@ -28,32 +37,48 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
                 name: 'angularComponentName',
                 message: 'What is the name of the angular component you want to create?'
             }
+            /*,
+            {
+                type: 'input',
+                name: 'destinationDirectory',
+                message: 'Where should the component be created?'
+            }*/
         ];
 
         this.prompt(prompts, function (props) {
             this.angularModuleName = props.angularModuleName;
             this.angularComponentName = props.angularComponentName;
+
+            var angularComponentNameParts = this.angularComponentName.split('-')
+            for(var i = 0; i < angularComponentNameParts.length; i++){
+                angularComponentNameParts[i] = (i == 0)  ?
+                    lCaseFirst(angularComponentNameParts[i]) :
+                    uCaseFirst(angularComponentNameParts[i]) ;
+            }
+            var angularComponentNameMixedCase = angularComponentNameParts.join('')
+
+            this.controllerFileName = this.angularComponentName + '.ng.controller.js';
+            this.directiveFileName = this.angularComponentName + '.ng.directive.js' ;
+            this.templateFileName =  this.angularComponentName + '.ng.template.html' ;
+
+            this.controllerName = angularComponentNameMixedCase + 'Ctrl'
+            this.directiveName = angularComponentNameMixedCase
+
             done();
         }.bind(this));
     },
 
-    writing: {
-        app: function () {
-            this.dest.mkdir('app');
-            this.dest.mkdir('app/templates');
+    writing: function () {
 
-            this.src.copy('_package.json', 'package.json');
-            this.src.copy('_bower.json', 'bower.json');
-        },
+        this.dest.mkdir(this.angularComponentName)
 
-        projectfiles: function () {
-            this.src.copy('editorconfig', '.editorconfig');
-            this.src.copy('jshintrc', '.jshintrc');
-        }
+        this.template('controller.js', this.angularComponentName + '/' + this.controllerFileName);
+        this.template('directive.js', this.angularComponentName + '/' + this.directiveFileName);
+        this.template('template.html', this.angularComponentName + '/' + this.templateFileName);
+
     },
 
     end: function () {
-        this.installDependencies();
     }
 });
 

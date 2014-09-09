@@ -6,7 +6,7 @@
   "main": "app/index.js",
   "repository": "tb01923/generator-angular-component",
   "author": {
-    "name": "",
+    "name": "tbrown",
     "email": "",
     "url": "https://github.com/tb01923"
   },
