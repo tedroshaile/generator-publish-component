@@ -58,11 +58,10 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
             var angularComponentNameMixedCase = angularComponentNameParts.join('')
 
             this.controllerFileName = this.angularComponentName + '.ng.controller.js';
-            this.directiveFileName = this.angularComponentName + '.ng.directive.js' ;
-            this.templateFileName =  this.angularComponentName + '.ng.template.html' ;
+
 
             this.controllerName = angularComponentNameMixedCase + 'Ctrl'
-            this.directiveName = angularComponentNameMixedCase
+
 
             done();
         }.bind(this));
@@ -73,8 +72,7 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
         this.dest.mkdir(this.angularComponentName)
 
         this.template('controller.js', this.angularComponentName + '/' + this.controllerFileName);
-        this.template('directive.js', this.angularComponentName + '/' + this.directiveFileName);
-        this.template('template.html', this.angularComponentName + '/' + this.templateFileName);
+
 
     },
 

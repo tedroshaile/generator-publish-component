@@ -1,14 +1,14 @@
 {
-  "name": "generator-angular-component",
+  "name": "generator-publish-component",
   "version": "0.0.0",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "tb01923/generator-angular-component",
+  "repository": "tedroshaile/generator-publish-component",
   "author": {
     "name": "tbrown",
     "email": "",
-    "url": "https://github.com/tb01923"
+    "url": "https://github.com/tedroshaile"
   },
   "engines": {
     "node": ">=0.10.0"
