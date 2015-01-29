@@ -1,13 +1,28 @@
+To link (install local copy) of generator-publish-component
+
+clone generator-publish-component into a new directory
+
+```
+cd generator-publish-component
+```
+
+then 
+
+```
+npm link 
+```
+
+
 To install generator-publish-component from npm, run:
 
-```bash
-npm install -g generator-publish-component
+```
+npm link generator-publish-component
 ```
 
 Finally, initiate the generator:
 
-```bash
-yo generator-publish-component
+```
+yo publish-component
 ```
 
 

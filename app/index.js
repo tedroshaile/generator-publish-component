@@ -13,7 +13,7 @@ var lCaseFirst = function(string) {
 }
 
 
-var AngularComponentGenerator = yeoman.generators.Base.extend({
+var PublishComponentGenerator = yeoman.generators.Base.extend({
     initializing: function () {
         //this.pkg = require('../package.json');
     },
@@ -23,19 +23,24 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
 
         // Have Yeoman greet the user.
         this.log(yosay(
-            'Welcome to the astonishing AngularComponentGenerator generator!'
+            'Welcome to the astonishing PublishComponentGenerator generator!'
         ));
 
         var prompts = [
             {
                 type: 'input',
-                name: 'angularModuleName',
-                message: 'What is the name of your angular module?'
+                name: 'publisherComponentNameSingular',
+                message: 'What is the singular name of the component you want to publish?'
             },
             {
                 type: 'input',
-                name: 'angularComponentName',
-                message: 'What is the name of the angular component you want to create?'
+                name: 'publisherComponentNamePlural',
+                message: 'What is the MongoDB collection name of the component you want to publish?'
+            },
+            {
+                type: 'input',
+                name: 'publisherComponentKey',
+                message: 'What is the name of the components primary key?'
             }
             /*,
             {
@@ -46,22 +51,20 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
         ];
 
         this.prompt(prompts, function (props) {
-            this.angularModuleName = props.angularModuleName;
-            this.angularComponentName = props.angularComponentName;
+            this.publisherComponentNameSingular = props.publisherComponentNameSingular;
+            this.publisherComponentNamePlural = props.publisherComponentNamePlural;
+            this.publisherComponentKey = props.publisherComponentKey;
 
-            var angularComponentNameParts = this.angularComponentName.split('-')
-            for(var i = 0; i < angularComponentNameParts.length; i++){
-                angularComponentNameParts[i] = (i == 0)  ?
-                    lCaseFirst(angularComponentNameParts[i]) :
-                    uCaseFirst(angularComponentNameParts[i]) ;
+            var publisherNameParts = this.publisherComponentNamePlural.split('-')
+            for(var i = 0; i < publisherNameParts.length; i++){
+                publisherNameParts[i] = (i == 0)  ?
+                    lCaseFirst(publisherNameParts[i]) :
+                    uCaseFirst(publisherNameParts[i]) ;
             }
-            var angularComponentNameMixedCase = angularComponentNameParts.join('')
+            var publisherNameMixedCase = publisherNameParts.join('')
 
-            this.controllerFileName = this.angularComponentName + '.ng.controller.js';
-
-
-            this.controllerName = angularComponentNameMixedCase + 'Ctrl'
-
+            this.publisherFileName ='publish-' + this.publisherComponentNamePlural + '.js';
+            this.publisherName = 'publish' + uCaseFirst(publisherNameMixedCase)
 
             done();
         }.bind(this));
@@ -69,9 +72,9 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
 
     writing: function () {
 
-        this.dest.mkdir(this.angularComponentName)
+        //this.dest.mkdir(this.angularComponentName)
 
-        this.template('controller.js', this.angularComponentName + '/' + this.controllerFileName);
+        this.template('publisher.js', this.publisherFileName);
 
 
     },
@@ -80,4 +83,4 @@ var AngularComponentGenerator = yeoman.generators.Base.extend({
     }
 });
 
-module.exports = AngularComponentGenerator;
+module.exports = PublishComponentGenerator;
